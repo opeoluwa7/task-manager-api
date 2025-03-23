@@ -9,8 +9,8 @@ const UserController = require("../controllers/user_controller.js");
 
 router.get('/profile', [isAuthenticated.check], UserController.findUser);
 
-router.patch('/profile', [isAuthenticated.check], updateLimit, UserController.updateUser);
+router.patch('/update-profile', [isAuthenticated.check], updateLimit, UserController.updateUser);
 
-router.delete('/profile', [isAuthenticated.check], UserController.deleteUser)
+router.delete('/delete-profile', [isAuthenticated.check], UserController.deleteUser)
 
 module.exports = router
