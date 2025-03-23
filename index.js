@@ -1,6 +1,6 @@
 const express = require("express");
 const env = require("./src/config/env.js");
-const PORT = env.PORT || 5000;
+const PORT = env.PORT || 8080;
 
 
 const AuthRoutes = require("./src/routes/auth_routes.js");
