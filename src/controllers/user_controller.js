@@ -11,13 +11,14 @@ const findUser = async (req, res, next) => {
 
         if (!user) {
             return res.status(404).json({
+                success: false,
                 error: "User not found"
             })
         }
 
         res.status(200).json({
             success: true,
-            data: {
+            user: {
                 user_id: user.user_id,
                 name: user.name,
                 email: user.email
@@ -33,7 +34,10 @@ const updateUser = async (req, res, next) => {
         const user_id = req.user.user_id;
 
         const { error, value } = authSchema.validate(req.body, {convert: true});
-        if (error) return res.status(400).json({ error: error.details[0].message });
+        if (error) return res.status(400).json({ 
+            success: false,
+            error: error.details[0].message 
+        });
 
         const { email: newEmail, password: newPassword, name: newName } = value;
 
@@ -41,6 +45,7 @@ const updateUser = async (req, res, next) => {
 
         if (!user) {
             return res.status(404).json({
+                success: false,
                 error: "User not found"
             })
         }
@@ -59,7 +64,11 @@ const updateUser = async (req, res, next) => {
 
         
         delete results.password;
-        res.status(200).json({ user: results, token: newToken });
+        res.status(200).json({ 
+            success: true,
+            updatedUser: results, 
+            token: newToken 
+        });
     } catch (error) {
         next(error)
     }
@@ -77,7 +86,10 @@ const deleteUser = async (req, res, next) => {
             })
         }
 
-        res.status(200).json({ message: "User deleted successfully" });
+        res.status(200).json({ 
+            success: true,
+            message: "User deleted successfully" 
+        });
     } catch (error) {
         next(error);
     }

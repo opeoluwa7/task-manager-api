@@ -7,14 +7,20 @@ const register = async (req, res, next) => {
     try {
 
         const { error, value } = authSchema.validate(req.body, {convert: true});
-        if (error) return res.status(400).json({ error: error.details[0].message });
+        if (error) return res.status(400).json({ 
+            success: false,
+            error: error.details[0].message 
+        });
 
         const { email, password, name } = value;
 
         const existingUser = await authQueries.getUserDetails(email);
 
         if (existingUser) {
-            return res.status(400).json({ error: "Email already registered" });
+            return res.status(400).json({ 
+                success: false,
+                error: "Email already registered" 
+            });
         }
 
         const encryptedPassword = await encryptPassword(password);
@@ -32,12 +38,10 @@ const register = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
-            data: {
-                user: {
-                    user_id: user_id,
-                    email,
-                    name
-                }
+            user: {
+                user_id: user_id,
+                email,
+                name
             },
             token: accessToken
         })
@@ -49,17 +53,21 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-
-
         const { error, value } = authSchema.validate(req.body, {convert: true});
-        if (error) return res.status(400).json({ error: error.details[0].message });
+        if (error) return res.status(400).json({ 
+            success: false,
+            error: error.details[0].message 
+        });
 
         const { email, password } = value;
 
         const user = await authQueries.getUserDetails(email);
 
         if (!user) {
-            return res.status(404).json({ error: "User not found" })
+            return res.status(404).json({ 
+                success: false,
+                error: "User not found" 
+            })
         }
 
  
@@ -69,19 +77,20 @@ const login = async (req, res, next) => {
 
         const match = await comparePasswords(password, storedHashedPassword);
         if (!match) {
-            return res.status(401).json({ error: "Passwords don\'t match" })
+            return res.status(401).json({ 
+                success: false,
+                error: "Passwords don\'t match" 
+            })
         }
         
         const accessToken = generateAccessToken(email, user_id);
 
         res.status(200).json({
             success: true,
-            data: {
-                user: {
-                    user_id: user_id,
-                    email,
-                    name
-                }
+            user: {
+                user_id: user_id,
+                email,
+                name
             },
             token: accessToken
         })

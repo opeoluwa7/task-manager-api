@@ -6,7 +6,7 @@ module.exports = {
 
         if (!authHeader) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: {
                     message: 'Auth headers not provided in the request.'
                 }
@@ -15,7 +15,7 @@ module.exports = {
 
         if (!authHeader.startsWith('Bearer')) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: {
                     message: 'Invalid auth mechanism.'
                 }
@@ -26,7 +26,7 @@ module.exports = {
 
         if (!token) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: {
                     message: 'Bearer token missing in the authorization headers.'
                 }
@@ -39,7 +39,7 @@ module.exports = {
             
             if (!user) {
                 return res.status(403).json({
-                    status: false,
+                    success: false,
                     error: 'Invalid access token provided, please login again.'
                 });
 
@@ -49,7 +49,7 @@ module.exports = {
             next();
         } catch (error) {
             return res.status(403).json({
-                status: false,
+                success: false,
                 error: 'Token verification failed, please login again.'
             });
         }

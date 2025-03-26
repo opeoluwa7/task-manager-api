@@ -9,12 +9,15 @@ const createNewTask = async (req, res, next) => {
         task.user_id = req.user.user_id;
 
         if (!task) {
-            return res.status(400).json({error: "Empty fields, Please fill out form"})
+            return res.status(400).json({
+                success: false,
+                error: "Empty fields, Please fill out form"
+            })
         }
 
         if (!task.user_id) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: "User not identified, please login again"
             })
         }
@@ -30,12 +33,16 @@ const createNewTask = async (req, res, next) => {
 
         if (!results) {
             return res.status(400).json({
-                status: false,
+                success: false,
                 error: "Something went wrong"
             })
         }
 
-        res.status(201).json(results)
+        res.status(201).json({
+            success: true,
+            task: results
+        }
+        )
     } catch (error) {
         next(error)
     }
@@ -52,7 +59,7 @@ const getAllTasks = async (req, res, next) => {
 
         if (!user_id) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: "User not identified, please login again"
             })
         }
@@ -61,12 +68,15 @@ const getAllTasks = async (req, res, next) => {
 
         if (results.length === 0) {
             return res.status(404).json({
-                status: false,
+                success: false,
                 error: "No tasks found!"
             });
         }
 
-        res.status(200).json(results)
+        res.status(200).json({
+            success: true,
+            tasks: results
+        });
     } catch (error) {
         next(error)
     }
@@ -82,13 +92,9 @@ const updateUserTask = async (req, res, next) => {
 
         if (!updatedTask.user_id) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: "User not identified, please login again"
             })
-        }
-
-        if (updatedTask.deadline) {
-
         }
 
         const results = await taskQueries.updateTask(
@@ -102,13 +108,15 @@ const updateUserTask = async (req, res, next) => {
 
         if (!results) {
             return res.status(404).json({
-                status: false,
+                succcess: false,
                 error: "No task found"
             })
         }
 
-        res.status(200).json(results);
-
+        res.status(200).json({
+            success: true,
+            updatedTask: results
+        });
     } catch (error) {
         next(error)
     }
@@ -120,7 +128,7 @@ const deleteUserTask = async (req, res, next) => {
 
         if (!user_id) {
             return res.status(401).json({
-                status: false,
+                success: false,
                 error: "User not identified, please login again"
             })
         }
@@ -129,19 +137,25 @@ const deleteUserTask = async (req, res, next) => {
         let task = await taskQueries.getTaskById(user_id)
 
         if (!task) {
-            return res.status(404).json({ error: "Task not found in the database!" })
+            return res.status(404).json({ 
+                success: false,
+                error: "Task not found in the database!" 
+            })
         }
 
         const result = await taskQueries.deleteTask(task.task_id);
 
         if(!result) {
             return res.status(400).json({
-                status: false,
+                success: false,
                 error: "Something went wrong"
             })
         }
 
-        res.status(200).json({message: "Task deleted successfully!"});
+        res.status(200).json({
+            success: true,
+            message: "Task deleted successfully!"
+        });
     } catch (error) {
         next(error)
     }
