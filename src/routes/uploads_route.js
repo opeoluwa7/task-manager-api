@@ -33,10 +33,11 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
             })
         }
 
-        const fileUrl = file.map(image => ({
+        const fileUrl = {
                 name: image,
                 url: `uploads/${image}`
-            }))
+            }
+
         const user_id = req.user.user_id;
 
         if (!user_id) return res.status(401).json({
