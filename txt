@@ -1,0 +1,11 @@
+{
+    "success": true,
+    "data": {
+        "user": {
+            "user_id": 8,
+            "email": "greatest@great.com",
+            "name": "Oluwatobi"
+        }
+    },
+     "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJlbWFpbCI6ImdyZWF0ZXN0QGdyZWF0LmNvbSIsImlhdCI6MTc0MjY2MjAyMSwiZXhwIjoxNzQyNjY1NjIxfQ.1NQB5lz-wD8vA7JV24Y1glLtH3fkE4OLC-YptA_DwJE"
+}
