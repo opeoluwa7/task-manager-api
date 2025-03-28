@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const fs = require("fs");
 const path = require("path")
-
+const uploadQueries = require("../config/db/uploadQueries.js");
 const upload = require("../common/uploads.js");
 const uploadDir = path.join(__dirname, '../../uploads')
 
@@ -29,14 +29,28 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
         if (!file) {
             return res.status(400).json({
                     success: false,
-                    error: "No file uploaded"
+                    error: "No image uploaded"
             })
         }
+
+        const fileUrl = file.map(image => ({
+                name: image,
+                url: `uploads/${image}`
+            }))
+        const user_id = req.user.user_id;
+
+        if (!user_id) return res.status(401).json({
+                success: false,
+                error: "No Auth Headers found. please log in again."
+            })
+
+        const result = uploadQueries.uploadImageUrl(fileUrl, user_id)
 
 
         res.status(201).json({ 
                 success: true,
-                message: "File uploaded successfully" 
+                message: "File uploaded successfully",
+                image: result
         })
     });  
    } catch (error) {
@@ -52,14 +66,18 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
                 error: "Failed too read uploads directory"
             });
 
-            const fileUrl = files.map(file => ({
-                name: file,
-                url: `/uploads/${file}`
-            }));
+            const user_id = req.user.user_id;
+
+            if (!user_id) return res.status(401).json({
+                success: false,
+                error: "No Auth Headers found. please log in again."
+            })
+
+            const result = uploadQueries.getImages(user_id)
 
             res.status(200).json({
                 success: true,
-                images: fileUrl
+                images: result
             });
         }) 
     } catch (error) {

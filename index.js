@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const env = require("./src/config/env.js");
 const PORT = env.PORT || 5000;
 
