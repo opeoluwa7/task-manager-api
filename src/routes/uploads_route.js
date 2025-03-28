@@ -34,8 +34,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
         }
 
         const fileUrl = {
-                name: image,
-                url: `uploads/${image}`
+                url: `uploads/${file.filename}`
             }
 
         const user_id = req.user.user_id;
