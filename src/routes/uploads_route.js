@@ -75,6 +75,7 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
 
             res.status(200).json({
                 success: true,
+                message: "All images",
                 images: result
             });
         }) 
