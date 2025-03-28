@@ -71,7 +71,12 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
                 error: "No Auth Headers found. please log in again."
             })
 
-            const result = await uploadQueries.getImages(user_id)
+            const result = await uploadQueries.getImages(user_id);
+
+            if (!result) return res.status(404).json({
+                success: false,
+                error: "No images found"
+            })
 
             res.status(200).json({
                 success: true,
