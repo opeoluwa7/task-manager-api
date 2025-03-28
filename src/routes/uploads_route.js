@@ -9,7 +9,7 @@ const isAuthenticated = require("../middlewares/is_authenticated.js");
 
 router.post('/upload', [isAuthenticated.check], (req, res, next) => {
    try {
-   upload.single("image")(req, res, (err) => {
+   upload.single("image")(req, res, async (err) => {
         if (err) {
             if (err.code === 'LIMIT_FILE_SIZE') {
                 return res.status(400).json({ 
@@ -33,9 +33,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
             })
         }
 
-        const fileUrl = {
-                url: `upload/${file.filename}`
-            }
+        const fileUrl = `upload/${file.filename}`
 
         const user_id = req.user.user_id;
 
@@ -44,7 +42,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
                 error: "No Auth Headers found. please log in again."
             })
 
-        const result = uploadQueries.uploadImageUrl(fileUrl, user_id)
+        const result = await uploadQueries.uploadImageUrl(fileUrl, user_id)
 
 
         res.status(201).json({ 
@@ -60,7 +58,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
 
 router.get('/upload', [isAuthenticated.check], (req, res, next) => {
     try {
-       fs.readdir(uploadDir, (err, files) => {
+       fs.readdir(uploadDir, async (err, files) => {
             if (err) return res.status(500).json({
                 success: false,
                 error: "Failed to read uploads directory"
@@ -73,7 +71,7 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
                 error: "No Auth Headers found. please log in again."
             })
 
-            const result = uploadQueries.getImages(user_id)
+            const result = await uploadQueries.getImages(user_id)
 
             res.status(200).json({
                 success: true,
