@@ -59,10 +59,13 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
 router.get('/upload', [isAuthenticated.check], (req, res, next) => {
     try {
        fs.readdir(uploadDir, async (err, files) => {
-            if (err) return res.status(500).json({
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
                 success: false,
                 error: "Failed to read uploads directory"
             });
+        }
 
             const user_id = req.user.user_id;
 
