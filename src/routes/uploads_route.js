@@ -34,7 +34,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
         }
 
         const fileUrl = {
-                url: `uploads/${file.filename}`
+                url: `upload/${file.filename}`
             }
 
         const user_id = req.user.user_id;
@@ -63,7 +63,7 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
        fs.readdir(uploadDir, (err, files) => {
             if (err) return res.status(500).json({
                 success: false,
-                error: "Failed too read uploads directory"
+                error: "Failed to read uploads directory"
             });
 
             const user_id = req.user.user_id;
