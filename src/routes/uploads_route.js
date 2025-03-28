@@ -65,7 +65,11 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
                 success: false,
                 error: "Failed to read uploads directory"
             });
-        }
+            }
+            
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, { recursive: true })
+            }
 
             const user_id = req.user.user_id;
 
