@@ -25,7 +25,7 @@ app.use("/images", imageUploads);
 app.use("/images", express.static( './uploads'));
 
 
-console.log("Serving files from:", path.join(__dirname, './uploads'));
+
 
 app.use("/auth", AuthRoutes);
 app.use("/user", UserRoutes);
