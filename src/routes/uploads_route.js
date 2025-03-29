@@ -2,7 +2,8 @@ const router = require("express").Router();
 const fs = require("fs");
 const path = require("path");
 const uploadQueries = require("../config/db/uploadQueries.js");
-const upload = require("../common/uploads.js");
+const uploadMiddleware = require("../middlewares/uploadMiddleware.js");
+const upload = uploadMiddleware("uploads");
 const uploadDir =  path.join(__dirname, "../../uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
@@ -55,17 +56,8 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
    } 
 });
 
-router.get('/upload', [isAuthenticated.check], (req, res, next) => {
+router.get('/upload', [isAuthenticated.check], async (req, res, next) => {
     try {
-       fs.readdir(uploadDir, async (err, files) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({
-                success: false,
-                error: "Failed to read uploads directory"
-            });
-            }
-        
             const user_id = req.user.user_id;
 
             if (!user_id) return res.status(401).json({
@@ -85,7 +77,6 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
                 message: "All images",
                 images: result
             });
-        }) 
     } catch (error) {
         next(error)
     }
