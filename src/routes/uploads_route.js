@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const uploadQueries = require("../config/db/uploadQueries.js");
 const upload = require("../common/uploads.js");
-const uploadDir =  path.join(process.cwd(), "uploads");
+const uploadDir =  path.join(__dirname, "../../uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
 router.post('/upload', [isAuthenticated.check], (req, res, next) => {
