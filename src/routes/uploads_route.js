@@ -3,8 +3,7 @@ const fs = require("fs");
 
 const uploadQueries = require("../config/db/uploadQueries.js");
 const upload = require("../common/uploads.js");
-const uploadDir = "../../uploads"
-
+const uploadDir =  path.join(process.cwd(), "uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
 router.post('/upload', [isAuthenticated.check], (req, res, next) => {
@@ -66,11 +65,7 @@ router.get('/upload', [isAuthenticated.check], (req, res, next) => {
                 error: "Failed to read uploads directory"
             });
             }
-            
-            if (!fs.existsSync(uploadDir)) {
-                fs.mkdirSync(uploadDir, { recursive: true })
-            }
-
+        
             const user_id = req.user.user_id;
 
             if (!user_id) return res.status(401).json({
