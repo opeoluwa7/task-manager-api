@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const fs = require("fs");
-const path = require("path")
+
 const uploadQueries = require("../config/db/uploadQueries.js");
 const upload = require("../common/uploads.js");
-const uploadDir = path.join(__dirname, '../../uploads')
+const uploadDir = "../../uploads"
 
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
