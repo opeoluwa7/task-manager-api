@@ -13,7 +13,7 @@ const imageUploads = require("./src/routes/uploads_route.js");
 
 const errorHandler = require("./src/middlewares/error_handler.js");
 
-const path = require("path");
+
 
 
 const app = express();
@@ -22,7 +22,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/images", imageUploads);
-app.use("/images", express.static(path.join(__dirname, './uploads')));
+app.use("/images", express.static( './uploads'));
+
 
 console.log("Serving files from:", path.join(__dirname, './uploads'));
 
