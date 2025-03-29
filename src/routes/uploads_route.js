@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const uploadQueries = require("../config/db/uploadQueries.js");
-const uploadMiddleware = require("../middlewares/uploadMiddleware.js");
+const { uploadMiddleware } = require("../middlewares/uploadMiddleware.js");
 const upload = uploadMiddleware("uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
