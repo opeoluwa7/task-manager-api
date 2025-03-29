@@ -32,7 +32,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
             })
         }
 
-        const fileUrl = `upload/${file.filename}`
+        const fileUrl = req.file.path
 
         const user_id = req.user.user_id;
 
