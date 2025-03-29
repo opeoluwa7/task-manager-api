@@ -4,23 +4,8 @@ const { uploadMiddleware } = require("../middlewares/uploadMiddleware.js");
 const upload = uploadMiddleware("uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
-router.post('/upload', [isAuthenticated.check], (req, res, next) => {
+router.post('/upload', [isAuthenticated.check, upload.single("image")], async (req, res, next) => {
    try {
-   upload.single("image")(req, res, async (err) => {
-        if (err) {
-            if (err.code === 'LIMIT_FILE_SIZE') {
-                return res.status(400).json({ 
-                        success: false,
-                        error: "File size is too large!, max size is 1mb" 
-                })
-            }
-
-            return res.status(400).json({
-                    success: false,
-                    error: err.message
-            })
-        }
-        
         const file = req.file; // image gotten from post request
             
         if (!file) {
@@ -30,7 +15,7 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
             })
         }
 
-        const fileUrl = req.file.path
+        const fileUrl = file.path
 
         const user_id = req.user.user_id;
 
@@ -47,7 +32,6 @@ router.post('/upload', [isAuthenticated.check], (req, res, next) => {
                 message: "File uploaded successfully",
                 image: result
         })
-    });  
    } catch (error) {
    next(error) 
    } 
