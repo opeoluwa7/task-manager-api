@@ -4,9 +4,13 @@ const { uploadMiddleware } = require("../middlewares/uploadMiddleware.js");
 const upload = uploadMiddleware("uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
+console.log(typeof uploadMiddleware);
+
 router.post('/upload', [isAuthenticated.check, upload.single("image")], async (req, res, next) => {
    try {
         const file = req.file; // image gotten from post request
+
+        console.log(file);
             
         if (!file) {
             return res.status(400).json({
