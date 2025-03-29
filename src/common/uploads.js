@@ -7,7 +7,14 @@ const storage = multer.diskStorage({
         const uploadDir = path.join(process.cwd(), "uploads");
 
         if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true })
+                try {
+                   fs.mkdirSync(uploadDir, { recursive: true })
+                   
+                   console.log(`Created at: ${uploadDir}`)
+                } catch (error) {
+                    console.error(`Error creating directory: ${error.message}`)
+                return cb(error)
+                }           
         } 
 
         cb(null, uploadDir)
