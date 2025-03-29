@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const fs = require("fs");
-
+const path = require("path");
 const uploadQueries = require("../config/db/uploadQueries.js");
 const upload = require("../common/uploads.js");
 const uploadDir =  path.join(process.cwd(), "uploads");
