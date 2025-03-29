@@ -1,10 +1,7 @@
 const router = require("express").Router();
-const fs = require("fs");
-const path = require("path");
 const uploadQueries = require("../config/db/uploadQueries.js");
 const uploadMiddleware = require("../middlewares/uploadMiddleware.js");
 const upload = uploadMiddleware("uploads");
-const uploadDir =  path.join(__dirname, "../../uploads");
 const isAuthenticated = require("../middlewares/is_authenticated.js");
 
 router.post('/upload', [isAuthenticated.check], (req, res, next) => {
