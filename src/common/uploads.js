@@ -3,23 +3,16 @@ const path = require("path");
 const fs = require("fs");
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const uploadDir = path.join(__dirname, "../../uploads");
+    destination: (_req, _file, cb) => {
+        const uploadDir = path.resolve(__dirname, "../../uploads");
 
         if (!fs.existsSync(uploadDir)) {
-                try {
-                   fs.mkdirSync(uploadDir, { recursive: true })
-                   
-                   console.log(`Created at: ${uploadDir}`)
-                } catch (error) {
-                    console.error(`Error creating directory: ${error.message}`)
-                return cb(error)
-                }           
+            fs.mkdirSync(uploadDir, { recursive: true })          
         } 
 
         cb(null, uploadDir)
     },
-    filename: (req, file, cb) => {
+    filename: (_req, file, cb) => {
         cb(null, Date.now() + "-" + file.originalname)
     }
 })
@@ -27,8 +20,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 1000000 }, //1mb file size limit
-    fileFilter: function(req, file, cb) {
+    limits: { fileSize: 5 * 1024 * 1024},
+    fileFilter: function(_req, file, cb) {
         checkFileType(file, cb)
     }
 });
