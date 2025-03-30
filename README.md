@@ -76,7 +76,7 @@ If everything is set up correctly, the server will start on http://localhost:300
 
 Test with Postman
 
-To test the API, use the provided Postman documentation.
+To test the API, use the provided [Postman documentation](https://documenter.getpostman.com/view/42958843/2sB2cPk5wr).
 
 
 ## API USAGE
