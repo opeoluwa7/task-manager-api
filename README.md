@@ -1,6 +1,6 @@
 # task-manager-api
 
-A node.js API that helps manage tasks, handle CRUD operations, user authentication with PostgreSQL.
+A node.js API that helps manage tasks, handle CRUD operations, jwt authentication with PostgreSQL.
 
 ## Tech Stack
 
