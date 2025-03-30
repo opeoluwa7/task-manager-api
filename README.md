@@ -27,6 +27,7 @@ For full API details, check the Postman Documentation [here](https://documenter.
 - Can be used to create, update and delete tasks.
 - Can be used to help track schedule based on factors like deadline and priority.
 - Registered users can update their own data and delete their account.
+- Users can upload images and retrive them.
 
 ## API USAGE
 
