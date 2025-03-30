@@ -29,6 +29,55 @@ For full API details, check the Postman Documentation [here](https://documenter.
 - Registered users can update their own data and delete their account.
 - Users can upload images and retrive them.
 
+## **Setup Guide**  
+
+> **Note:** This is only needed if you want to run the API locally. By default, the API is hosted on **Railway** and is ready to use.  
+
+### **Clone the Repository**  
+First, download the project files:  
+```
+git clone https://github.com/opeoluwa7/task-manager-api.git
+cd task-manager-api
+```
+
+Install Dependencies
+
+Run the following command to install required packages:
+
+`npm install`
+
+Configure Environment Variables
+
+If you want to run the API locally, you’ll need to set up environment variables.
+
+Create a .env file in the project root and add the following variables:
+```
+DB_URL=your_postgresql_database_url
+JWT_SECRET=your_jwt_secret_key
+JWT_EXP_IN_SEC=your_token_expiry_in_seconds
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+
+Where to get these values?
+	•	Database URL → Use your own PostgreSQL database or a Railway-hosted one.
+	•	JWT Secrets → Set your own values for security.
+	•	Cloudinary Variables → Sign up at Cloudinary to get API keys.
+
+Run the Server Locally
+
+Start the development server:
+
+npm start
+
+If everything is set up correctly, the server will start on http://localhost:3000.
+
+Test with Postman
+
+To test the API, use the provided Postman documentation.
+
+
 ## API USAGE
 
 To use this API, you will need a tool like [Postman](https://www.postman.com/) or [Httpie](https://httpie.io/) to be able to access these endpoints or you can use your browser url and pass in data with development console.
