@@ -61,6 +61,7 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
 Where to get these values?
+
 	•	Database URL → Use your own PostgreSQL database or a Railway-hosted one.
 	•	JWT Secrets → Set your own values for security.
 	•	Cloudinary Variables → Sign up at Cloudinary to get API keys.
