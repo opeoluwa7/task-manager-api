@@ -33,6 +33,7 @@ For full API details, check the Postman Documentation [here](https://documenter.
 To use this API, you will need a tool like [Postman](https://www.postman.com/) or [Httpie](https://httpie.io/) to be able to access these endpoints or you can use your browser url and pass in data with development console.
 
 Here's a basic example of how to use the API.
+
 **Authentication**
 
 **Endpoint:** POST /auth/register
