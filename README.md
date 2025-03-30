@@ -100,5 +100,5 @@ package.json
 
 ## Deployment
 
-- Hosted on Railway
-- Access the API at https:///task-manager-api-2025.up.railway.app
+- Hosted on [Railway](https://railway.com).
+- Image storage hosted on [Cloudinary](https://cloudinary.com).
