@@ -2,7 +2,11 @@
 
 A node.js API that helps manage tasks, handle CRUD operations, jwt authentication with PostgreSQL.
 
-## Tech Stack
+## Documentation
+
+For full API details, check the Postman Documentation [here](https://documenter.getpostman.com/view/42958843/2sB2cPk5wr)
+
+### Tech Stack
 
 - **Backend:**
   - **Node.js:** Node is a free, open-source, cross-platform Javascript runtime environment that lets developers create servers, web apps, command line tools and scripts.
@@ -17,14 +21,14 @@ A node.js API that helps manage tasks, handle CRUD operations, jwt authenticatio
   - **Railway:** A cloud platform that simplifies deploying and managing databases, backend services, and full-stack applications with minimal configurations.
   - **Cloudinary:** Cloudinary is a cloud-based platform offering end-to-end image and video management, including storage, optimization, transformation, and delivery, for websites and applications.
 
-### Features
+#### Features
 
 - Authentication for accessing protected routes and resources.
 - Can be used to create, update and delete tasks.
 - Can be used to help track schedule based on factors like deadline and priority.
 - Registered users can update their own data and delete their account.
 
-##### API USAGE
+###### API USAGE
 
 To use this API, you will need a tool like [Postman](https://www.postman.com/) or [Httpie](https://httpie.io/) to be able to access these endpoints or you can use your browser url and pass in data with development console.
 
@@ -76,9 +80,7 @@ Here's a basic example of how to use the API.
 ]
 ```
 
-For full API details, check the Postman Documentation
-
-##### Project Structure
+###### Project Structure
 
 ```
 src/
