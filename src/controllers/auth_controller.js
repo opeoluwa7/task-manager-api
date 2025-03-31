@@ -1,5 +1,5 @@
 const { encryptPassword, comparePasswords } = require("../utils/bcrypt.js");
-const { generateAccessToken } = require("../utils/jwt.js");
+const { generateAccessToken, blacklistToken } = require("../utils/jwt.js");
 const { authSchema } = require("../utils/joi_validation.js");
 const authQueries = require("../config/db/auth_queries.js")
 
@@ -105,6 +105,10 @@ const logout = async(req, res, next) => {
     try {
         const authHeaders = req.headers['authorization'];
 
+        const token = authHeaders.split(' ')[1];
+
+        blacklistToken(token);
+        
         delete authHeaders;
 
         res.status(200).json({
