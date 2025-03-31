@@ -4,8 +4,8 @@ const createTask = async (title, description, status, priority, deadline, user_i
 
     try {
 
-        const allowedStatus = ['pending', 'in_progress', 'completed'];
-        const allowedPriority = ['low', 'medium', 'high'];
+        // const allowedStatus = ['pending', 'in_progress', 'completed'];
+        // const allowedPriority = ['low', 'medium', 'high'];
 
         const results = await pool.query('INSERT INTO tasks (title, description, status, priority, deadline, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', [
             title,
@@ -48,10 +48,10 @@ const getTasks = async (user_id, filters, limit, offset) => {
     }
 }
 
-const getTaskById = async (user_id) => {
+const getTaskById = async (user_id, task_id) => {
     try {
-        const query = 'SELECT task_id FROM tasks WHERE user_id = $1';
-        const values = [user_id];
+        const query = 'SELECT * FROM tasks WHERE user_id = $1 and task_id = $2';
+        const values = [user_id, task_id];
 
         const results = await pool.query(query, values);
 
@@ -61,12 +61,10 @@ const getTaskById = async (user_id) => {
     }
 }
 
-const updateTask = async (title, description, status, priority, deadline, user_id) => {
+const updateTask = async (title, description, status, priority, deadline, user_id, task_id) => {
     try {
-        const query = 'UPDATE tasks SET title = COALESCE($1, title), description = COALESCE($2, description), status = COALESCE($3, status), priority = COALESCE($4, priority), deadline = COALESCE($5, deadline) WHERE user_id = $6 RETURNING *';
-        const values = [title, description, status, priority, deadline, user_id];
-
-        console.log(values);
+        const query = 'UPDATE tasks SET title = COALESCE($1, title), description = COALESCE($2, description), status = COALESCE($3, status), priority = COALESCE($4, priority), deadline = COALESCE($5, deadline) WHERE user_id = $6 and task_id = $7 RETURNING *';
+        const values = [title, description, status, priority, deadline, user_id, task_id];
 
         const results = await pool.query(query, values);
 

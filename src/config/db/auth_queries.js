@@ -10,7 +10,7 @@ const createUser = async (user) => {
 
         return results.rows[0]
     } catch (error) {
-        throw error
+        throw console.error();
     }
 }
 

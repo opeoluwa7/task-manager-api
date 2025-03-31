@@ -40,6 +40,7 @@ const createNewTask = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
+            message: "Task created successfully",
             task: results
         }
         )
@@ -75,6 +76,7 @@ const getAllTasks = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
+            message: "All tasks",
             tasks: results
         });
     } catch (error) {
@@ -85,12 +87,19 @@ const getAllTasks = async (req, res, next) => {
 const updateUserTask = async (req, res, next) => {
     try {
         const updatedTask = req.body;
-        updatedTask.user_id = req.user.user_id;
+        user_id = req.user.user_id;
+
+        if (!updatedTask) {
+            return res.status(400).json({
+                success: false,
+                error: "Required fields are missing. Please fill out form"
+            })
+        }
 
         updatedTask.priority = updatedTask.priority.toLowerCase();
         updatedTask.status = updatedTask.status.toLowerCase();
 
-        if (!updatedTask.user_id) {
+        if (!user_id) {
             return res.status(401).json({
                 success: false,
                 error: "User not identified, please login again"
@@ -103,23 +112,24 @@ const updateUserTask = async (req, res, next) => {
             updatedTask.status,
             updatedTask.priority,
             updatedTask.deadline,
-            updatedTask.user_id
+            user_id
         );
 
         if (!results) {
-            return res.status(404).json({
+            return res.status(500).json({
                 succcess: false,
-                error: "No task found"
+                error: "Something went wrong"
             })
         }
 
         res.status(200).json({
             success: true,
+            message: "Task updated succesfully!",
             updatedTask: results
         });
     } catch (error) {
         next(error)
-    }
+    }   
 }
 
 const deleteUserTask = async (req, res, next) => {
@@ -133,8 +143,10 @@ const deleteUserTask = async (req, res, next) => {
             })
         }
 
+        const task_id = req.params;
 
-        let task = await taskQueries.getTaskById(user_id)
+
+        let task = await taskQueries.getTaskById(user_id, task_id);
 
         if (!task) {
             return res.status(404).json({ 
@@ -146,7 +158,7 @@ const deleteUserTask = async (req, res, next) => {
         const result = await taskQueries.deleteTask(task.task_id);
 
         if(!result) {
-            return res.status(400).json({
+            return res.status(500).json({
                 success: false,
                 error: "Something went wrong"
             })

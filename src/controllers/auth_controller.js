@@ -5,7 +5,6 @@ const authQueries = require("../config/db/auth_queries.js")
 
 const register = async (req, res, next) => {
     try {
-
         const { error, value } = authSchema.validate(req.body, {convert: true});
         if (error) return res.status(400).json({ 
             success: false,
@@ -19,7 +18,7 @@ const register = async (req, res, next) => {
         if (existingUser) {
             return res.status(400).json({ 
                 success: false,
-                error: "Email already registered" 
+                error: "This email is already registered" 
             });
         }
 
@@ -28,7 +27,7 @@ const register = async (req, res, next) => {
         const results = await authQueries.createUser({
             name,
             email,
-            password: encryptedPassword
+            encryptedPassword
         });
 
 
@@ -38,10 +37,11 @@ const register = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
+            message: "User registered successfully!",
             user: {
                 user_id: user_id,
-                email,
-                name
+                name,
+                email
             },
             token: accessToken
         })
@@ -87,10 +87,11 @@ const login = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
+            message: "User login successful!",
             user: {
                 user_id: user_id,
-                email,
-                name
+                name,
+                email
             },
             token: accessToken
         })
@@ -100,7 +101,30 @@ const login = async (req, res, next) => {
     }
 }
 
+const logout = async(req, res, next) => {
+    try {
+        const authHeaders = req.headers['authorization'];
+
+        if (!authHeaders) {
+            return res.status(401).json({
+                success: false,
+                error: "AuthHeaders missing in request. Log in again."
+            })
+        }
+
+        delete authHeaders;
+
+        res.status(200).json({
+            success: true,
+            message: "User logged out successfully!"
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
 module.exports = {
     register,
-    login
+    login,
+    logout
 }
