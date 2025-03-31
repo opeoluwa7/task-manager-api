@@ -105,6 +105,8 @@ const updateUserTask = async (req, res, next) => {
                 error: "User not identified, please login again"
             })
         }
+        
+        const task_id = req.params;
 
         const results = await taskQueries.updateTask(
             updatedTask.title,
@@ -112,7 +114,8 @@ const updateUserTask = async (req, res, next) => {
             updatedTask.status,
             updatedTask.priority,
             updatedTask.deadline,
-            user_id
+            user_id,
+            task_id
         );
 
         if (!results) {
