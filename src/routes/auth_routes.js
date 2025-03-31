@@ -11,6 +11,6 @@ const loginLimit = rateLimit(10, 10, "Too many login attempts!. Try again in 10 
 
 router.post('/register', registerLimit, AuthController.register);
 router.post('/login', loginLimit, AuthController.login);
-router.post('/logout', [isAuthenticated.check], AuthController.logout);
+router.post('/logout', AuthController.logout);
 
 module.exports = router
