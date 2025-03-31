@@ -105,14 +105,7 @@ const logout = async(req, res, next) => {
     try {
         const authHeaders = req.headers['authorization'];
 
-        const result = delete authHeaders;
-
-        if (!result) {
-            return res.status(401).json({
-                success: false,
-                error: "User not found. please login again."
-            })
-        }
+        delete authHeaders;
 
         res.status(200).json({
             success: true,
