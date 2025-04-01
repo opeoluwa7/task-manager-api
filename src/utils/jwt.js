@@ -24,7 +24,7 @@ exports.verifyToken = (token) => {
 
 exports.blacklistToken = (token, expiry = JWTEXPTIME) => {
     const blacklist = redisClient.set(token, 'blacklisted', 'EX', expiry);
-    console.log(blacklist);
+    console.log("This is a list of blacklist tokens:",blacklist);
 
     return blacklist;
 }
