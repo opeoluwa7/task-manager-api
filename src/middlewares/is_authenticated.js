@@ -2,7 +2,7 @@ const { verifyToken } = require("../utils/jwt.js");
 const redisClient = require("redis").createClient();
 
 module.exports = {
-    check: (req, res, next) => {
+    check: async (req, res, next) => {
         const authHeader = req.headers['authorization'];
 
         if (!authHeader) {
@@ -34,7 +34,7 @@ module.exports = {
             })
         }
 
-        redisClient.get(token, (err, result) => {
+        await redisClient.get(token, (err, result) => {
             if (err) {
                 return res.status(500).json({
                     success: false,
@@ -48,9 +48,9 @@ module.exports = {
                     error: "Token is blacklisted"
                 })
             }
-            
-        
 
+            next()
+        });    
 
         try {
             const user = verifyToken(token);
@@ -71,6 +71,5 @@ module.exports = {
                 error: 'Token verification failed, please login again.'
             });
         }
-      });
     }
 }
