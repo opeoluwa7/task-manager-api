@@ -22,8 +22,11 @@ exports.verifyToken = (token) => {
     return jwt.verify(token, JWTSECRET)
 }
 
-exports.blacklistToken = async(token, expiry = JWTEXPTIME) => {
-        await redisClient.set(token, 'blacklisted', 'EX', expiry);
+exports.blacklistToken = (token, expiry = JWTEXPTIME) => {
+    const blacklist = redisClient.set(token, 'blacklisted', 'EX', expiry);
+    console.log(blacklist);
+
+    return blacklist;
 }
 
 
