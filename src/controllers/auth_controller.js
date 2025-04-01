@@ -1,5 +1,8 @@
+const Redis = require("ioredis");
+const redis = new Redis();
+
 const { encryptPassword, comparePasswords } = require("../utils/bcrypt.js");
-const { generateAccessToken, blacklistToken } = require("../utils/jwt.js");
+const { generateAccessToken } = require("../utils/jwt.js");
 const { authSchema } = require("../utils/joi_validation.js");
 const authQueries = require("../config/db/auth_queries.js")
 
@@ -101,15 +104,13 @@ const login = async (req, res, next) => {
     }
 }
 
-const logout = (req, res, next) => {
+const logout = async (req, res, next) => {
     try {
         const authHeaders = req.headers['authorization'];
 
         const token = authHeaders.split(' ')[1];
-
-        blacklistToken(token);
-        
-        delete authHeaders;
+        const expiresIn = 900;
+        await redis.setex(token, expiresIn, "blacklisted")
 
         res.status(200).json({
             success: true,
