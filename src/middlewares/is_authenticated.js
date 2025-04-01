@@ -39,10 +39,16 @@ module.exports = {
 
         const isBlacklisted = await redis.get(token);
 
+            try {
             if (isBlacklisted) {
                 return res.status(401).json({
                     success: false,
                     error: "Invalid token"
+                })
+            }
+            } catch (error) {
+                return res.status(500).json({
+                    error: "Token not blacklisted"
                 })
             }
 
