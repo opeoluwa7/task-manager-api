@@ -1,6 +1,5 @@
 const { verifyToken } = require("../utils/jwt.js");
-const Redis = require("ioredis");
-const redis = new Redis();
+const redis = require("../utils/redis.js")
 
 module.exports = {
     check: async (req, res, next) => {
@@ -37,9 +36,11 @@ module.exports = {
             })
         }
 
-        const isBlacklisted = await redis.get(token);
 
             try {
+
+            const isBlacklisted = await redis.get(token);
+
             if (isBlacklisted) {
                 return res.status(401).json({
                     success: false,

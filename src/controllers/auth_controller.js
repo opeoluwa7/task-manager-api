@@ -1,5 +1,4 @@
-const Redis = require("ioredis");
-const redis = new Redis();
+const redis = require("../utils/redis.js")
 
 const { encryptPassword, comparePasswords } = require("../utils/bcrypt.js");
 const { generateAccessToken } = require("../utils/jwt.js");
