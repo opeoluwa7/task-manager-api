@@ -41,7 +41,7 @@ module.exports = {
             if (result) {
                 return res.status(401).json({
                     success: false,
-                    error: "Token is blacklisted"
+                    error: "Token is blacklisted. Login in again!"
                 })
             }
 
