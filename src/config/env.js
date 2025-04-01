@@ -8,7 +8,5 @@ module.exports = {
     CLOUD_NAME: process.env.CLOUD_NAME,
     API_KEY: process.env.API_KEY,
     API_SECRET: process.env.API_SECRET,
-    REDISHOST: process.env.REDISHOST,
-    REDISPASSWORD: process.env.REDISPASSWORD,
-    REDISPORT: process.env.REDISPORT,
+    REDISURL: process.env.REDISURL,
 }
