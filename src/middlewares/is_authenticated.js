@@ -3,6 +3,8 @@ const redisClient = require("redis").createClient();
 
 module.exports = {
     check: async (req, res, next) => {
+        try {
+
         const authHeader = req.headers['authorization'];
 
         if (!authHeader) {
@@ -34,13 +36,7 @@ module.exports = {
             })
         }
 
-        await redisClient.get(token, (err, result) => {
-            if (err) {
-                return res.status(500).json({
-                    success: false,
-                    error: "Internal server error"
-                })
-            }
+        const result = await redisClient.get(token);
 
             if (result) {
                 return res.status(401).json({
@@ -49,11 +45,7 @@ module.exports = {
                 })
             }
 
-            next()
-        });    
-
-        try {
-            const user = verifyToken(token);
+        const user = verifyToken(token);
             
             if (!user) {
                 return res.status(403).json({
