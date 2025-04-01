@@ -2,7 +2,7 @@ const { verifyToken } = require("../utils/jwt.js");
 const redisClient = require("redis").createClient();
 
 module.exports = {
-    check: (req, res, next) => {
+    check: async (req, res, next) => {
         try {
 
         const authHeader = req.headers['authorization'];
@@ -36,7 +36,7 @@ module.exports = {
             })
         }
 
-        const result = redisClient.get(token);
+        const result = await redisClient.get(token);
 
             if (result) {
                 return res.status(401).json({
